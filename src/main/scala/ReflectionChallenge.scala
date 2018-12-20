@@ -7,6 +7,13 @@ class Issue(private val title: String) {
 object ReflectionChallenge extends App {
     val issue = new Issue("不具合1")
 
-      // TODO リフレクションを用いて printTitle() メソッドを呼び出す
+    // リフレクションを用いて printTitle() メソッドを呼び出す
+    val m = runtimeMirror(getClass.getClassLoader)
+    val im = m.reflect(issue)
+    val methodPrintTitle = typeOf[Issue].decl(TermName("printTitle")).asMethod
+    val mm = im.reflectMethod(methodPrintTitle)
+
+    mm()   // 不具合1
+
 }
 
