@@ -8,5 +8,8 @@ object ReflectionChallenge extends App {
     val issue = new Issue("不具合1")
 
       // TODO リフレクションを用いて printTitle() メソッドを呼び出す
+    val instanceMirror = mirror.reflect(issue)
+    val printTitleMethod = typeTag[Issue].tpe.decl(TermName("printTitle")).asMethod
+    instanceMirror.reflectMethod(printTitleMethod).apply()
 }
 
